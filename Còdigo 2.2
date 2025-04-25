@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Celda 1 - Importaciones 
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Celda 2 - Definición de parámetros y función 
+E = np.linspace(0, 2*np.pi, 10000000)
+T = 16481.27  # en segundos
+n = 2*np.pi/T  # movimiento medio
+e = 0.4999  # Excentricidad
+Me = n*2909.38
+
+def f(x):
+    return x - e*np.sin(x) - Me
+
+f_values = f(E)  
+
+# Celda 3 - Gráfica 
+plt.plot(E, f_values)
+plt.axhline(y=0)
+plt.grid()
+plt.show()
+
+# Celda 4 - Encontrar raíces 
+i = np.where(np.abs(f_values) < 0.000001)
+print(E[i[0][0]], E[i[0][1]])  # Mostrar las dos primeras raíces encontradas
+
+# Celda 5 - Mostrar Me 
+print(Me)
+
+# Celda 6 - Método de Newton 
+E_guess = Me
+for i in range(10):
+    print(f'la iteración {i} nos da el valor de E: {E_guess}')
+    f_val = E_guess - e * np.sin(E_guess) - Me
+    f_prime = 1 - e * np.cos(E_guess)
+    delta = -f_val / f_prime
+    E_guess = E_guess + delta
+
+print("Valor final de E:", E_guess)
+
+# Celda 7 - Conversión a grados 
+print(3.4800 * 180 / np.pi)  # Conversión a grados
