@@ -1,0 +1,21 @@
+import numpy as np
+from scipy.optimize import newton
+
+def resolver_F(Mh, e, F0=1.0, tol=1e-10):
+    
+    # Definimos la función y su derivada
+    def ecuacion(F):
+        return e * np.sinh(F) - F - Mh
+    
+    def derivada(F):
+        return e * np.cosh(F) - 1
+    
+    # Usamos el método de Newton-Raphson
+    F_sol = newton(ecuacion, F0, fprime=derivada, tol=tol)
+    return F_sol
+
+# Ejemplo con Mh=20 y e=21
+Mh = 0.351244
+e = 1.1968
+F_solucion = resolver_F(Mh, e)
+print(f"La solución para F es: {F_solucion:.10f}")
